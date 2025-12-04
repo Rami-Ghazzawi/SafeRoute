@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login Page | Safe Route</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="login-style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- العناصر العائمة -->
+    <div class="floating-elements">
+      <div class="floating-element"></div>
+      <div class="floating-element"></div>
+      <div class="floating-element"></div>
+    </div>
+
+    <div class="login-container">
+      <div class="login-card">
+        <!-- الرسالة في حالة الخطأ -->
+        <!-- <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i> اسم المستخدم أو كلمة المرور غير صحيحة
+            </div> -->
+
+        <!-- الرسالة في حالة النجاح -->
+        <!-- <div class="success-message">
+                <i class="fas fa-check-circle"></i> تم تسجيل الدخول بنجاح
+            </div> -->
+
+        <div class="header">
+          <div class="logo">
+            <i class="fas fa-road-barrier"></i>
+          </div>
+          <h1>🚧 Safe Route</h1>
+          <p>أهلاً وسهلاً، ياريت تسجل دخول عشان تبدا باستخدام التطبيق</p>
+        </div>
+
+        <form action="login.php" method="POST" id="loginForm">
+          <div class="input-group">
+            <input
+              type="text"
+              name="username"
+              placeholder="اسم المستخدم"
+              required
+              autocomplete="username"
+            />
+            <i class="fas fa-user"></i>
+          </div>
+
+          <div class="input-group">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="كلمة المرور"
+              required
+              autocomplete="current-password"
+            />
+            <i class="fas fa-lock"></i>
+            <button
+              type="button"
+              class="password-toggle"
+              onclick="togglePassword()"
+            >
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+
+          <button type="submit" class="login-btn">
+            <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+          </button>
+        </form>
+
+        <div class="footer">
+          <p>نسيت كلمة المرور؟ <a href="#">استعادة الحساب</a></p>
+          <p style="margin-top: 8px">
+            &copy; Safe Route Web Application by Rami and Ahmed
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // تبديل عرض كلمة المرور
+      function togglePassword() {
+        const passwordInput = document.getElementById("password");
+        const toggleIcon = document.querySelector(".password-toggle i");
+
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          toggleIcon.className = "fas fa-eye-slash";
+        } else {
+          passwordInput.type = "password";
+          toggleIcon.className = "fas fa-eye";
+        }
+      }
+
+      // تأثيرات عند تحميل الصفحة
+      document.addEventListener("DOMContentLoaded", function () {
+        const inputs = document.querySelectorAll("input");
+
+        inputs.forEach((input) => {
+          // تأثير عند التركيز على الحقل
+          input.addEventListener("focus", function () {
+            this.parentElement.classList.add("focused");
+          });
+
+          // تأثير عند إزالة التركيز من الحقل
+          input.addEventListener("blur", function () {
+            if (this.value === "") {
+              this.parentElement.classList.remove("focused");
+            }
+          });
+        });
+
+        // تأثير عند إرسال النموذج
+        const form = document.getElementById("loginForm");
+        form.addEventListener("submit", function (e) {
+          const submitBtn = this.querySelector(".login-btn");
+          submitBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> جاري التسجيل...';
+          submitBtn.disabled = true;
+
+          // إعادة تعيين الزر بعد 3 ثواني (في حالة الخطأ)
+          setTimeout(() => {
+            submitBtn.innerHTML =
+              '<i class="fas fa-sign-in-alt"></i> تسجيل الدخول';
+            submitBtn.disabled = false;
+          }, 3000);
+        });
+      });
+
+      // تأثيرات الكتابة
+      const inputs = document.querySelectorAll(
+        'input[type="text"], input[type="password"]'
+      );
+      inputs.forEach((input) => {
+        input.addEventListener("input", function () {
+          if (this.value.length > 0) {
+            this.style.background = "#f7fafc";
+          } else {
+            this.style.background = "#fff";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
